@@ -7,7 +7,9 @@ import java.util.List;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
+import com.algaworks.algafood.client.model.RestauranteModel;
 import com.algaworks.algafood.client.model.RestauranteResumoModel;
+import com.algaworks.algafood.client.model.input.RestauranteInput;
 
 import lombok.AllArgsConstructor;
 
@@ -29,6 +31,15 @@ public class RestauranteClient {
 		} catch (RestClientResponseException e) {
 			throw new ClientApiException(e.getMessage(), e);
 		}
+	}
+	
+	public RestauranteModel adicionar(RestauranteInput restauranteInput) {
+		try {
+			URI resourceUri = URI.create(url.concat(RESOURCE_PATH));
+			return restTemplate.postForObject(resourceUri, restauranteInput, RestauranteModel.class);
+	} catch (RestClientResponseException e) {
+		throw new ClientApiException(e.getMessage(), e);
+	}
 	}
 
 }
